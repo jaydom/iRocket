@@ -1,0 +1,68 @@
+<div class="wrapper" style="border:4px solid #0066ff;">
+    <div class="row" id="mainContainer" style="border:1px solid #ff1e35; height: 100%;">
+        <div class="col-xs-2 resizable"  style="border:1px solid #ff1e35;" id="resizable1">
+            <% include ./sidebar.ejs %>
+        </div>
+        <div class="col-xs-3 resizable"   id="resizable2">
+            <% include ./chat.ejs %>
+        </div>
+        <div class="col-xs-7 resizable" style="border:1px solid #ff1e35;height:100%;bottom: 0;!important;" id="resizable3">
+            <% include ./content.ejs %>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(function ()
+        {
+            $("#resizable1").resizable(
+                    {
+                        autoHide: true,
+                        handles: 'e',
+                        start:function(e,ui)
+                        {
+                            $(".resizable1").resizable( "option", "maxWidth", ui.element.parent().width()*30/100 );
+                        },
+                        resize: function(e, ui)
+                        {
+                            var parent = ui.element.parent();
+                            var remainingSpace = parent.width() - ui.element.outerWidth();
+                            var divTwo = ui.element.next();
+                            var divThree = divTwo.next();
+                            var divTwoWidth = (remainingSpace - divThree.outerWidth())+"px";
+                            divTwo.width(divTwoWidth);
+                        },
+                        stop: function(e, ui)
+                        {
+                            var parent = ui.element.parent();
+                            ui.element.css(
+                                    {
+                                        //width: ui.element.width()/parent.width()*100+"%",
+                                        width: ui.element.width()+"px",
+                                    });
+                        }
+                    });
+            $("#resizable2").resizable(
+                    {
+                        autoHide: true,
+                        handles: 'e',
+                        resize: function(e, ui)
+                        {
+                            $( ".resizable2" ).resizable( "option", "maxWidth", ui.element.parent().width()*30/100 );
+                            var parent = ui.element.parent();
+                            var remainingSpace = parent.width() - ui.element.outerWidth();
+                            var divOne = ui.element.prev();
+                            var divThree = ui.element.next();
+                            var divThreeWidth = (remainingSpace -divOne.outerWidth())+"px";
+                            divThree.width(divThreeWidth);
+                        },
+                        stop: function(e, ui)
+                        {
+                            var parent = ui.element.parent();
+                            ui.element.css(
+                                    {
+                                        width: ui.element.width()+"px"
+                                    });
+                        }
+                    });
+        });
+    </script>
+</div>
