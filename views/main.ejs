@@ -1,12 +1,12 @@
-<div class="wrapper" style="border:4px solid #0066ff;">
-    <div class="row" id="mainContainer" style="border:1px solid #ff1e35; height: 100%;">
-        <div class="col-xs-2 resizable"  style="border:1px solid #ff1e35;" id="resizable1">
+<div class="container">
+    <div class="row" id="mainContainer">
+        <div class="col-xs-2 resizable" >
             <% include ./sidebar.ejs %>
         </div>
-        <div class="col-xs-3 resizable"   id="resizable2">
+        <div class="col-xs-3 resizable" id="resizable1">
             <% include ./chat.ejs %>
         </div>
-        <div class="col-xs-7 resizable" style="border:1px solid #ff1e35;height:100%;bottom: 0;!important;" id="resizable3">
+        <div class="col-xs-7 resizable" id="resizable2">
             <% include ./content.ejs %>
         </div>
     </div>
