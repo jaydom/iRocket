@@ -9,18 +9,22 @@ var phonecatApp = angular.module('phonecatApp', [
   'phonecatServices'
 ]);
 
+/*
 phonecatApp.config(['$routeProvider','$locationProvider',
   function($routeProvider,$locationProvider) {
     $routeProvider.
       when('/index', {
             templateUrl: './index'
         }).
+        when('/login', {
+            templateUrl: './login'
+        }).
       otherwise({
         redirectTo: '/index'
       });
       //$locationProvider.html5Mode(true);
   }]);
-
+*/
 //定义全局的socket
 phonecatApp.factory('$socket', function($rootScope) {
     //var socket = io.connection('http://localhost:8899');

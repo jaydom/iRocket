@@ -33,7 +33,8 @@ a:focus {
 }
 /* Layouts */
 .wrapper {
-  min-height: 100%;
+  height: 100%;
+
 }
 .wrapper:before,
 .wrapper:after {
@@ -110,6 +111,9 @@ body.fixed .navbar {
 }
 body.fixed .wrapper {
   margin-top: 50px;
+}
+body.fixed .container {
+    margin-top: 50px;
 }
 /* Content */
 .content {
@@ -3412,24 +3416,6 @@ fieldset[disabled] .btn-vk.active {
   background-color: #ffffff;
 }
 
-.resizable {
-    top: 0;
-    bottom: -70px;
-    height: 100%;
-    padding: 0.5em;
-    overflow-x: hidden;
-    overflow-y: auto !important;
-    border-right:1px solid #333;
-
-}
-.ui-resizable-e {
-    cursor: e-resize;
-    width: 5px;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    background-color: #666;
-}
 html,
 body,
 .row{
