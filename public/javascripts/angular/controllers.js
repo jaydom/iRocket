@@ -4,13 +4,10 @@
 //添加ui-bootstrap的支持
 var phonecatControllers = angular.module('phonecatControllers', ['ui.bootstrap','ngFileUpload']);
 
-phonecatControllers.factory('global', function () {
-    return {
-        files:[]
-    };
-});
-phonecatControllers.controller('HeadCtrl', ['$scope','$location','$log','$socket',
-    function($scope,$location, $log,$socket) {
+phonecatControllers.controller('loginCtrl', ['$scope','$location','$log','$user','$socket','$http',
+    function($scope,$location, $log,$user,$socket,$http) {
+        $scope.email = "";
+        $scope.password = "";
         $scope.messages = [
             {"name":"1","imageUrl":"images/avatar3.png","Team":"Support Team","time":"5 mins","content":"Why not buy a new awesome theme?"},
             {"name":"2","imageUrl":"images/avatar2.png","Team":"AdminLTE Design Team","time":"2 hours","content":"Why not buy a new awesome theme?"},
@@ -34,7 +31,47 @@ phonecatControllers.controller('HeadCtrl', ['$scope','$location','$log','$socket
             $log.log('Message: ', message);
             $socket.emit('broadcast:msg', {message:message});
         });
+        $scope.login = function() {
+            $http.post('/login', {email:$scope.email,password:$scope.password})
+                .success(function(data, status, headers, config) {
+                    $log.log('success: ', data);
+                    if (data.status) {
+                        // succefull login
+                        $user.isLogged = true;
+                        $user.username = data.username;
+                        $user.token = data.token;
+                        $location.path("/main");
+                    }
+                    else {
+                        $user.isLogged = false;
+                        $user.username = '';
+                    }
+                })
+                .error(function(data, status, headers, config) {
+                    log.log('error: ', data);
+                    $user.isLogged = false;
+                    $user.username = '';
+                });
+        }
     }]);
+
+phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','global',
+    function($scope,$location,$user,global) {
+        console.log("UploadStep1Ctrl");
+        $scope.info = "test";
+        $scope.goToStep2 = function (files) {
+            if (files && files.length>0) {
+                $scope.files = files;
+                global.files = files;
+                $location.path("/upload-step2");
+            }
+        };
+        $scope.$on('$viewContentLoaded', function() {
+            split_init();
+            setPos();
+        });
+    }]);
+
 
 phonecatControllers.controller('UploadStep1Ctrl', ['$scope','$location','global',
   function($scope,$location,global) {

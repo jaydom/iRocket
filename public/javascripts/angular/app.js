@@ -6,7 +6,8 @@ var phonecatApp = angular.module('phonecatApp', [
   'ngRoute',
   'phonecatControllers',
   'phonecatFilters',
-  'phonecatServices'
+  'phonecatServices',
+  'phonecatDirectives'
 ]);
 
 /*
@@ -25,6 +26,11 @@ phonecatApp.config(['$routeProvider','$locationProvider',
       //$locationProvider.html5Mode(true);
   }]);
 */
+phonecatApp.config(['$routeProvider', function($routeProvider) {
+    $routeProvider.when('/login', { templateUrl: './login', controller: 'loginCtrl' , access: true});
+    $routeProvider.when('/main', { templateUrl: './main', controller: 'mainCtrl' });
+    $routeProvider.otherwise({ redirectTo: '/main' });
+}]);
 //定义全局的socket
 phonecatApp.factory('$socket', function($rootScope) {
     //var socket = io.connection('http://localhost:8899');
@@ -50,3 +56,37 @@ phonecatApp.factory('$socket', function($rootScope) {
         }
     };
 });
+
+phonecatApp.factory('$user', [function() {
+    var user = {
+        isLogged: false,
+        user: '',
+        token:''
+    };
+    return user;
+}]);
+
+phonecatApp.factory('global', function () {
+    return {
+        files:[]
+    };
+});
+
+phonecatApp.run(['$rootScope', '$window', '$location', '$log','$user', function ($rootScope, $window, $location, $log,$user) {
+    var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);
+    /*
+    var locationChangeSuccessOff = $rootScope.$on('$locationChangeSuccess', locationChangeSuccess);
+
+    var routeChangeStartOff = $rootScope.$on('$routeChangeStart', routeChangeStart);
+    var routeChangeSuccessOff = $rootScope.$on('$routeChangeSuccess', routeChangeSuccess);
+    */
+    function locationChangeStart(event) {
+        $log.log('locationChangeStart');
+        $log.log(arguments);
+        $log.log($user.isLogged);
+        if (!$user.isLogged) {
+            // reload the login route
+            $location.path("/login");
+        }
+    }
+}]);

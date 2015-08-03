@@ -557,7 +557,7 @@ body > .header .logo .icon {
   width: 20px;
 }
 .user-panel {
-  padding: 2px;
+  padding: 0px;
   margin-left: 10px;
   margin-right: 0px;
 }
@@ -569,13 +569,16 @@ body > .header .logo .icon {
 .user-panel:after {
   clear: both;
 }
+.user-panel > .image{
+    padding-top: 5px;
+}
 .user-panel > .image > img {
   width: 40px;
   height: 40px;
 }
 .user-panel > .info {
   font-weight: 600;
-  padding: 5px 5px 5px 15px;
+  padding: 0px 5px 5px 15px;
   font-size: 14px;
   line-height: 1;
 }

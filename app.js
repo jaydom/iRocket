@@ -35,18 +35,34 @@ app.use(function(req, res, next) {
 });
 app.get('/', routes.index);
 app.get('/users', users.list);
-app.get('/index', routes.index);
-app.get('/login', routes.login);
+app.get('/main', routes.main);
 app.get('/register', routes.register);
-app.post('/authenticate', function(req, res) {
+//登陆
+app.get('/login', routes.login);
+app.post('/login', function(req, res) {
+    console.log(req.body.email);
     User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
         if (err) {
-            res.json({type: false,data: "Error occured: " + err});
+            res.json({status: false,data: "Error occured: " + err});
         } else {
             if (user) {
-                res.json({type: true,data: user,token: user.token});
+                res.json({status: true,data: user,token: user.token});
             }else {
-                res.json({type: false,data: "Incorrect email/password"});
+                res.json({status: false,data: "Incorrect email/password"});
+            }
+        }
+    });
+});
+//为APP装备的login
+app.post('/app/login', function(req, res) {
+    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
+        if (err) {
+            res.json({status: false,data: "Error occured: " + err});
+        } else {
+            if (user) {
+                res.json({status: true,data: user,token: user.token});
+            }else {
+                res.json({status: false,data: "Incorrect email/password"});
             }
         }
     });
@@ -66,7 +82,7 @@ app.post('/signin', function(req, res) {
                     userModel.save(function(err, user) {
                         user.token = jwt.sign(user, "gsta123");
                         user.save(function(err, user1) {
-                            res.json({type: true,data: user1,token: user1.token});
+                            res.json({status: true,data: user1,token: user1.token});
                         });
                     });
                 }
