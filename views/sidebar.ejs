@@ -1,132 +1,161 @@
 <section class="sidebar" style="overflow: auto;">
     <!-- Sidebar user panel -->
     <!-- search form -->
-    <form action="#" method="get" class="sidebar-form">
+    <div class="sidebar-form">
         <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search..."/>
-                            <span class="input-group-btn">
-                                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-                            </span>
-        </div>
-    </form>
-    <!-- /.search form -->
-    <!-- sidebar menu: : style can be found in sidebar.less -->
-    <ul id="myTab" class="nav nav-tabs">
-        <li class="active">
-            <a href="#home" data-toggle="tab">
-                <i class="fa fa-comments-o"></i>
-            </a>
-        </li>
-        <li>
-            <a href="#ios" data-toggle="tab">
-                <i class="fa fa-user"></i>
-            </a>
-        </li>
-        <li class="dropdown">
-            <a href="#ios" data-toggle="tab">
-                <i class="fa fa-folder"></i>
-            </a>
-        </li>
-    </ul>
-    <div id="myTabContent" class="tab-content">
-        <div class="tab-pane fade in active" id="home">
-            <ul class="sidebar-menu">
-                <li class="active">
-                    <a href="index.html">
-                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="pages/widgets.html">
-                        <i class="fa fa-th"></i> <span>Widgets</span> <small class="badge pull-right bg-green">new</small>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-bar-chart-o"></i>
-                        <span>Charts</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/charts/morris.html"><i class="fa fa-angle-double-right"></i> Morris</a></li>
-                        <li><a href="pages/charts/flot.html"><i class="fa fa-angle-double-right"></i> Flot</a></li>
-                        <li><a href="pages/charts/inline.html"><i class="fa fa-angle-double-right"></i> Inline charts</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-laptop"></i>
-                        <span>UI Elements</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/UI/general.html"><i class="fa fa-angle-double-right"></i> General</a></li>
-                        <li><a href="pages/UI/icons.html"><i class="fa fa-angle-double-right"></i> Icons</a></li>
-                        <li><a href="pages/UI/buttons.html"><i class="fa fa-angle-double-right"></i> Buttons</a></li>
-                        <li><a href="pages/UI/sliders.html"><i class="fa fa-angle-double-right"></i> Sliders</a></li>
-                        <li><a href="pages/UI/timeline.html"><i class="fa fa-angle-double-right"></i> Timeline</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-edit"></i> <span>Forms</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/forms/general.html"><i class="fa fa-angle-double-right"></i> General Elements</a></li>
-                        <li><a href="pages/forms/advanced.html"><i class="fa fa-angle-double-right"></i> Advanced Elements</a></li>
-                        <li><a href="pages/forms/editors.html"><i class="fa fa-angle-double-right"></i> Editors</a></li>
-                    </ul>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-table"></i> <span>Tables</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/tables/simple.html"><i class="fa fa-angle-double-right"></i> Simple tables</a></li>
-                        <li><a href="pages/tables/data.html"><i class="fa fa-angle-double-right"></i> Data tables</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="pages/calendar.html">
-                        <i class="fa fa-calendar"></i> <span>Calendar</span>
-                        <small class="badge pull-right bg-red">3</small>
-                    </a>
-                </li>
-                <li>
-                    <a href="pages/mailbox.html">
-                        <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                        <small class="badge pull-right bg-yellow">12</small>
-                    </a>
-                </li>
-                <li class="treeview">
-                    <a href="#">
-                        <i class="fa fa-folder"></i> <span>Examples</span>
-                        <i class="fa fa-angle-left pull-right"></i>
-                    </a>
-                    <ul class="treeview-menu">
-                        <li><a href="pages/examples/invoice.html"><i class="fa fa-angle-double-right"></i> Invoice</a></li>
-                        <li><a href="pages/examples/login.html"><i class="fa fa-angle-double-right"></i> Login</a></li>
-                        <li><a href="pages/examples/register.html"><i class="fa fa-angle-double-right"></i> Register</a></li>
-                        <li><a href="pages/examples/lockscreen.html"><i class="fa fa-angle-double-right"></i> Lockscreen</a></li>
-                        <li><a href="pages/examples/404.html"><i class="fa fa-angle-double-right"></i> 404 Error</a></li>
-                        <li><a href="pages/examples/500.html"><i class="fa fa-angle-double-right"></i> 500 Error</a></li>
-                        <li><a href="pages/examples/blank.html"><i class="fa fa-angle-double-right"></i> Blank Page</a></li>
-                    </ul>
-                </li>
-            </ul>
-        </div>
-        <div class="tab-pane fade" id="ios">
-            <p>iOS 是一个由苹果公司开发和发布的手机操作系统。最初是于 2007 年首次发布 iPhone、iPod Touch 和 Apple
-                TV。iOS 派生自 OS X，它们共享 Darwin 基础。OS X 操作系统是用在苹果电脑上，iOS 是苹果的移动版本。</p>
-        </div>
-        <div class="tab-pane fade" id="jmeter">
-            <p>jMeter 是一款开源的测试软件。它是 100% 纯 Java 应用程序，用于负载和性能测试。</p>
-        </div>
-        <div class="tab-pane fade" id="ejb">
-            <p>Enterprise Java Beans（EJB）是一个创建高度可扩展性和强大企业级应用程序的开发架构，部署在兼容应用程序服务器（比如 JBOSS、Web Logic 等）的 J2EE 上。
-            </p>
+            <input type="text" name="q" class="form-control" placeholder="Search..." ng-model="query"/>
+            <span class="input-group-btn">
+                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
         </div>
     </div>
+    <tabset>
+        <tab heading="chat">
+            <tab-heading>
+                <i class="fa fa-comments-o">会话</i>
+            </tab-heading>
+            <div class="tab-pane fade in active" id="home">
+                <div class="chat">
+                    <!-- chat item -->
+                    <div class="item">
+                        <img src="images/avatar.png" alt="user image" class="online"/>
+                        <p class="message">
+                            <a href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
+                                Mike Doe
+                            </a>
+                            I would like to meet you to discuss the latest news about
+                            the arrival of the new theme. They say it is going to be one the
+                            best themes on the market
+                        </p>
+                        <div class="attachment">
+                            <h4>Attachments:</h4>
+                            <p class="filename">
+                                Theme-thumbnail-image.jpg
+                            </p>
+                            <div class="pull-right">
+                                <button class="btn btn-primary btn-sm btn-flat">Open</button>
+                            </div>
+                        </div><!-- /.attachment -->
+                    </div><!-- /.item -->
+                    <!-- chat item -->
+                    <div class="item">
+                        <img src="images/avatar2.png" alt="user image" class="offline"/>
+                        <p class="message">
+                            <a href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
+                                Jane Doe
+                            </a>
+                            I would like to meet you to discuss the latest news about
+                            the arrival of the new theme. They say it is going to be one the
+                            best themes on the market
+                        </p>
+                    </div><!-- /.item -->
+                    <!-- chat item -->
+                    <div class="item">
+                        <img src="images/avatar3.png" alt="user image" class="offline"/>
+                        <p class="message">
+                            <a href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
+                                Susan Doe
+                            </a>
+                            I would like to meet you to discuss the latest news about
+                            the arrival of the new theme. They say it is going to be one the
+                            best themes on the market
+                        </p>
+                    </div><!-- /.item -->
+                    <div class="item">
+                        <img src="images/avatar3.png" alt="user image" class="offline"/>
+                        <p class="message">
+                            <a href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
+                                Susan Doe
+                            </a>
+                            I would like to meet you to discuss the latest news about
+                            the arrival of the new theme. They say it is going to be one the
+                            best themes on the market
+                        </p>
+                    </div><!-- /.item -->
+                    <div class="item">
+                        <img src="images/avatar3.png" alt="user image" class="offline"/>
+                        <p class="message">
+                            <a href="#" class="name">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
+                                李宁
+                            </a>
+                            I would like to meet you to discuss the latest news about
+                            the arrival of the new theme. They say it is going to be one the
+                            best themes on the market，哈哈
+                        </p>
+                    </div><!-- /.item -->
+                </div><!-- /.chat -->
+            </div>
+        </tab>
+        <tab heading="user">
+            <tab-heading>
+                <i class="fa fa-user">好友</i>
+            </tab-heading>
+            <div class="tab-pane fade in active" id="home">
+                <ul class="user-list">
+                    <li ng-repeat="user in user_list | filter:query | orderBy:orderProp" class="active">
+                        <a class="image">
+                            <img src="images/avatar.png" class="online"/> <span>{{user.name}}</span>
+                        </a>
+                        <div class="tools">
+                            <i class="fa fa-edit"></i>
+                            <i class="fa fa-trash-o"></i>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </tab>
+        <tab heading="file">
+            <tab-heading>
+                <i class="fa fa-folder">文件</i>
+            </tab-heading>
+            <div class="tab-pane fade in active">
+                <ul class="sidebar-menu">
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-angle-right"></i>
+                            <span>个人文件</span>
+                            <small class="badge pull-right bg-green">new</small>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="pages/charts/morris.html"><i class="fa fa-angle-double-right"></i> Morris</a></li>
+                            <li><a href="pages/charts/flot.html"><i class="fa fa-angle-double-right"></i> Flot</a></li>
+                            <li><a href="pages/charts/inline.html"><i class="fa fa-angle-double-right"></i> Inline charts</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-angle-right"></i>
+                            <span>群组文件</span>
+                            <small class="badge pull-right bg-green">new</small>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="pages/UI/general.html"><i class="fa fa-angle-double-right"></i> General</a></li>
+                            <li><a href="pages/UI/icons.html"><i class="fa fa-angle-double-right"></i> Icons</a></li>
+                            <li><a href="pages/UI/buttons.html"><i class="fa fa-angle-double-right"></i> Buttons</a></li>
+                            <li><a href="pages/UI/sliders.html"><i class="fa fa-angle-double-right"></i> Sliders</a></li>
+                            <li><a href="pages/UI/timeline.html"><i class="fa fa-angle-double-right"></i> Timeline</a></li>
+                        </ul>
+                    </li>
+                    <li class="treeview">
+                        <a href="#">
+                            <i class="fa fa-angle-right"></i>
+                            <span>文件标签</span>
+                            <small class="badge pull-right bg-green">new</small>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li><a href="pages/forms/general.html"><i class="fa fa-angle-double-right"></i> General Elements</a></li>
+                            <li><a href="pages/forms/advanced.html"><i class="fa fa-angle-double-right"></i> Advanced Elements</a></li>
+                            <li><a href="pages/forms/editors.html"><i class="fa fa-angle-double-right"></i> Editors</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </tab>
+    </tabset>
+    <hr>
 </section>

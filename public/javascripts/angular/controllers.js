@@ -4,33 +4,10 @@
 //添加ui-bootstrap的支持
 var phonecatControllers = angular.module('phonecatControllers', ['ui.bootstrap','ngFileUpload']);
 
-phonecatControllers.controller('loginCtrl', ['$scope','$location','$log','$user','$socket','$http',
-    function($scope,$location, $log,$user,$socket,$http) {
+phonecatControllers.controller('loginCtrl', ['$scope','$location','$log','$user','$http',
+    function($scope,$location, $log,$user,$http) {
         $scope.email = "";
         $scope.password = "";
-        $scope.messages = [
-            {"name":"1","imageUrl":"images/avatar3.png","Team":"Support Team","time":"5 mins","content":"Why not buy a new awesome theme?"},
-            {"name":"2","imageUrl":"images/avatar2.png","Team":"AdminLTE Design Team","time":"2 hours","content":"Why not buy a new awesome theme?"},
-            {"name":"3","imageUrl":"images/avatar.png","Team":"Developers","time":"Today","content":"Why not buy a new awesome theme?"},
-            {"name":"4","imageUrl":"images/avatar3.png","Team":"Sales Department","time":"Yesterday","content":"Why not buy a new awesome theme?"}
-        ];
-        $scope.status = {
-            isopen: false
-        };
-
-        $scope.toggled = function(open) {
-            $log.log('Dropdown is now: ', open);
-        };
-
-        $scope.toggleDropdown = function($event) {
-            $event.preventDefault();
-            $event.stopPropagation();
-            $scope.status.isopen = !$scope.status.isopen;
-        };
-        $socket.on('new:msg',function(message) {
-            $log.log('Message: ', message);
-            $socket.emit('broadcast:msg', {message:message});
-        });
         $scope.login = function() {
             $http.post('/login', {email:$scope.email,password:$scope.password})
                 .success(function(data, status, headers, config) {
@@ -38,7 +15,8 @@ phonecatControllers.controller('loginCtrl', ['$scope','$location','$log','$user'
                     if (data.status) {
                         // succefull login
                         $user.isLogged = true;
-                        $user.username = data.username;
+                        $user.name = data.name;
+                        $user.email = data.emal;
                         $user.token = data.token;
                         $location.path("/main");
                     }
@@ -55,10 +33,11 @@ phonecatControllers.controller('loginCtrl', ['$scope','$location','$log','$user'
         }
     }]);
 
-phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','global',
-    function($scope,$location,$user,global) {
-        console.log("UploadStep1Ctrl");
-        $scope.info = "test";
+phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socket','$http','$log','global',
+    function($scope,$location,$user,$socket,$http,$log,global) {
+        $scope.name = $user.name;
+        $scope.email = $user.email;
+        $scope.user_list = [];
         $scope.goToStep2 = function (files) {
             if (files && files.length>0) {
                 $scope.files = files;
@@ -69,6 +48,23 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','global
         $scope.$on('$viewContentLoaded', function() {
             split_init();
             setPos();
+            $http.get('/users',{params: {data:$user}})
+                .success(function(result, status, headers, config) {
+                    $log.log('success: ', result);
+                    if (result.status) {
+                       //更新用户列表
+                        $scope.user_list = result.data;
+                    }
+                })
+                .error(function(result, status, headers, config) {
+                    log.log('error: ', result);
+                });
+            $socket.emit('login', {name:$user.username});
+        });
+
+        $socket.on('new:msg',function(message) {
+            $log.log('Message: ', message);
+            $socket.emit('broadcast:msg', {message:message});
         });
     }]);
 

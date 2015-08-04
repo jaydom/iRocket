@@ -11,6 +11,7 @@ var mongoose   = require("mongoose");
 var User     = require('./models/User');
 var routes = require('./routes');
 var users = require('./routes/user');
+var chat_service = require("./routes/chat");
 // Connect to DB
 mongoose.connect("mongodb://admin:admin@127.0.0.1:27019/iRocket");
 var app = express();
@@ -34,19 +35,28 @@ app.use(function(req, res, next) {
     next();
 });
 app.get('/', routes.index);
-app.get('/users', users.list);
+app.get('/users', function(req,res){
+    console.log(req.query.data);
+    var query = User.find().sort('-create_date');
+    query.exec(function (err, results) {
+        if (err) {
+            res.json({status: false,data: "Error occured: " + err});
+        } else {
+            res.json({status: true,data: results});
+        }
+    });
+});
 app.get('/main', routes.main);
 app.get('/register', routes.register);
 //登陆
 app.get('/login', routes.login);
 app.post('/login', function(req, res) {
-    console.log(req.body.email);
     User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
         if (err) {
             res.json({status: false,data: "Error occured: " + err});
         } else {
             if (user) {
-                res.json({status: true,data: user,token: user.token});
+                res.json({status: true,name: user.name,email:user.email,token: user.token});
             }else {
                 res.json({status: false,data: "Incorrect email/password"});
             }
@@ -77,6 +87,7 @@ app.post('/signin', function(req, res) {
                     res.json({type: false,data: "User already exists!"});
                 } else {
                     var userModel = new User();
+                    userModel.name = req.body.name;
                     userModel.email = req.body.email;
                     userModel.password = req.body.password;
                     userModel.save(function(err, user) {
@@ -142,5 +153,9 @@ app.use(function(err, req, res, next) {
 process.on('uncaughtException', function(err) {
     console.log(err);
 });
+
+app.add_chat_service = function(server){
+    chat_service.service(server);
+};
 
 module.exports = app;

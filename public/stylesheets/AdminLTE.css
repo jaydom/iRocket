@@ -3448,3 +3448,86 @@ body,
     width: auto;
     overflow: auto;
 }
+
+.user-list {
+    margin: 0;
+    padding: 0px 0px;
+    list-style: none;
+}
+.user-list > li {
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    padding: 10px;
+    background: #f3f4f5;
+    margin-bottom: 2px;
+    border-left: 2px solid #e6e7e8;
+    color: #444;
+}
+.user-list > li:last-of-type {
+    margin-bottom: 0;
+}
+.user-list > li.danger {
+    border-left-color: #f56954;
+}
+.user-list > li.warning {
+    border-left-color: #f39c12;
+}
+.user-list > li.info {
+    border-left-color: #00c0ef;
+}
+.user-list > li.success {
+    border-left-color: #00a65a;
+}
+.user-list > li.primary {
+    border-left-color: #3c8dbc;
+}
+.user-list > li > input[type='checkbox'] {
+    margin: 0 10px 0 5px;
+}
+.user-list > li .text {
+    display: inline-block;
+    margin-left: 5px;
+    font-weight: 600;
+}
+.user-list > li .label {
+    margin-left: 10px;
+    font-size: 9px;
+}
+.user-list > li .tools {
+    display: none;
+    float: right;
+    color: #f56954;
+}
+.user-list > li .tools > .fa,
+.user-list > li .tools > .glyphicon,
+.user-list > li .tools > .ion {
+    margin-right: 5px;
+    cursor: pointer;
+}
+.user-list > li:hover .tools {
+    display: inline-block;
+}
+.user-list > li.done {
+    color: #999;
+}
+.user-list > li.done .text {
+    text-decoration: line-through;
+    font-weight: 500;
+}
+.user-list > li.done .label {
+    background: #eaeaec !important;
+}
+.user-list .handle {
+    display: inline-block;
+    cursor: move;
+    margin: 0 5px;
+}
+
+.user-list  .image{
+    padding-top: 5px;
+}
+.user-list .image > img {
+    width: 40px;
+    height: 40px;
+}

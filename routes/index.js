@@ -10,7 +10,7 @@ exports.check_permission = function (req, res, next) {
                 //res.json({type: false,data: "Error occured: " + err});
                 return res.redirect('/login');
             } else {
-                res.json({type: true,data: user});
+                res.json({type: true,name: user.name,email:user.email,token:user.token});
             }
         });
     }
