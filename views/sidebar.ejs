@@ -1,4 +1,4 @@
-<section class="sidebar" style="overflow: auto;">
+<section class="sidebar" style="overflow-x:hidden;overflow-y: auto;">
     <!-- Sidebar user panel -->
     <!-- search form -->
     <div class="sidebar-form">
@@ -15,79 +15,22 @@
                 <i class="fa fa-comments-o">会话</i>
             </tab-heading>
             <div class="tab-pane fade in active" id="home">
-                <div class="chat">
+                <div class="chat-list">
                     <!-- chat item -->
-                    <div class="item">
-                        <img src="images/avatar.png" alt="user image" class="online"/>
-                        <p class="message">
-                            <a href="#" class="name">
-                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                                Mike Doe
+                    <div class="item" ng-repeat="room in room_list | filter:query | orderBy:orderProp">
+                        <img ng-src="{{room.image_url}}" alt="user image" class="online"/>
+                        <p class="message"   ng-dblclick="select_room(room.target_id)">
+                            <a class="name" ng-dblclick="select_room(room.target_id)">
+                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i>{{room.time}}</small>
+                                {{room.name}}
                             </a>
-                            I would like to meet you to discuss the latest news about
-                            the arrival of the new theme. They say it is going to be one the
-                            best themes on the market
-                        </p>
-                        <div class="attachment">
-                            <h4>Attachments:</h4>
-                            <p class="filename">
-                                Theme-thumbnail-image.jpg
-                            </p>
-                            <div class="pull-right">
-                                <button class="btn btn-primary btn-sm btn-flat">Open</button>
-                            </div>
-                        </div><!-- /.attachment -->
-                    </div><!-- /.item -->
-                    <!-- chat item -->
-                    <div class="item">
-                        <img src="images/avatar2.png" alt="user image" class="offline"/>
-                        <p class="message">
-                            <a href="#" class="name">
-                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                                Jane Doe
-                            </a>
-                            I would like to meet you to discuss the latest news about
-                            the arrival of the new theme. They say it is going to be one the
-                            best themes on the market
+                            <small class="badge pull-right bg-green">{{room.new_message_number}}</small>
+                            <span style="" class="pull-left">
+                            {{room.message}}
+                            </span>
                         </p>
                     </div><!-- /.item -->
                     <!-- chat item -->
-                    <div class="item">
-                        <img src="images/avatar3.png" alt="user image" class="offline"/>
-                        <p class="message">
-                            <a href="#" class="name">
-                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                                Susan Doe
-                            </a>
-                            I would like to meet you to discuss the latest news about
-                            the arrival of the new theme. They say it is going to be one the
-                            best themes on the market
-                        </p>
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <img src="images/avatar3.png" alt="user image" class="offline"/>
-                        <p class="message">
-                            <a href="#" class="name">
-                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                                Susan Doe
-                            </a>
-                            I would like to meet you to discuss the latest news about
-                            the arrival of the new theme. They say it is going to be one the
-                            best themes on the market
-                        </p>
-                    </div><!-- /.item -->
-                    <div class="item">
-                        <img src="images/avatar3.png" alt="user image" class="offline"/>
-                        <p class="message">
-                            <a href="#" class="name">
-                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                                李宁
-                            </a>
-                            I would like to meet you to discuss the latest news about
-                            the arrival of the new theme. They say it is going to be one the
-                            best themes on the market，哈哈
-                        </p>
-                    </div><!-- /.item -->
                 </div><!-- /.chat -->
             </div>
         </tab>
@@ -95,10 +38,10 @@
             <tab-heading>
                 <i class="fa fa-user">好友</i>
             </tab-heading>
-            <div class="tab-pane fade in active" id="home">
+            <div class="tab-pane fade in active messages-menu" id="home">
                 <ul class="user-list">
                     <li ng-repeat="user in user_list | filter:query | orderBy:orderProp" class="active">
-                        <a class="image">
+                        <a class="image" ng-dblclick="create_single_room(user)">
                             <img src="images/avatar.png" class="online"/> <span>{{user.name}}</span>
                         </a>
                         <div class="tools">

@@ -60,6 +60,7 @@ phonecatApp.factory('$socket', function($rootScope) {
 phonecatApp.factory('$user', [function() {
     var user = {
         isLogged: false,
+        _id:'',
         user: '',
         token:''
     };

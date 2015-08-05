@@ -3531,3 +3531,84 @@ body,
     width: 40px;
     height: 40px;
 }
+
+.chat-list {
+    padding: 5px 20px 5px 10px;
+}
+.chat-list .item {
+    margin-bottom: 10px;
+}
+.chat-list .item:before,
+.chat-list .item:after {
+    display: table;
+    content: " ";
+}
+.chat-list .item:after {
+    clear: both;
+}
+.chat-list .item > img {
+    width: 40px;
+    height: 40px;
+    border: 2px solid transparent;
+    -webkit-border-radius: 50% !important;
+    -moz-border-radius: 50% !important;
+    border-radius: 50% !important;
+}
+.chat-list .item > img.online {
+    border: 2px solid #00a65a;
+}
+.chat-list .item > img.offline {
+    border: 2px solid #f56954;
+}
+.chat-list .item > .message {
+    margin-left: 55px;
+    margin-top: -40px;
+}
+.chat-list .item > .message > .name {
+    display: block;
+    font-weight: 600;
+}
+.chat-list .item > .message > span {
+    width:200px;
+    height:20px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
+}
+.chat-list .item > .attachment {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    background: #f0f0f0;
+    margin-left: 65px;
+    margin-right: 15px;
+    padding: 10px;
+}
+.chat-list .item > .attachment > h4 {
+    margin: 0 0 5px 0;
+    font-weight: 600;
+    font-size: 14px;
+}
+.chat-list .item > .attachment > p,
+.chat-list .item > .attachment > .filename {
+    font-weight: 600;
+    font-size: 13px;
+    font-style: italic;
+    margin: 0;
+}
+.chat-list .item > .attachment:before,
+.chat-list .item > .attachment:after {
+    display: table;
+    content: " ";
+}
+.chat-list .item > .attachment:after {
+    clear: both;
+}
+
+.chat-list  .image{
+    padding-top: 5px;
+}
+.chat-list .image > img {
+    width: 40px;
+    height: 40px;
+}

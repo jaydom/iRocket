@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var jwt        = require("jsonwebtoken");
 var mongoose   = require("mongoose");
 var User     = require('./models/User');
+var chat_room     = require('./models/chat_room');
 var routes = require('./routes');
 var users = require('./routes/user');
 var chat_service = require("./routes/chat");
@@ -36,18 +37,20 @@ app.use(function(req, res, next) {
 });
 app.get('/', routes.index);
 app.get('/users', function(req,res){
-    console.log(req.query.data);
     var query = User.find().sort('-create_date');
     query.exec(function (err, results) {
         if (err) {
             res.json({status: false,data: "Error occured: " + err});
         } else {
+            console.log(JSON.stringify(results));
             res.json({status: true,data: results});
         }
     });
 });
 app.get('/main', routes.main);
 app.get('/register', routes.register);
+
+app.post('/create_single_room', chat_service.create_single_room);
 //登陆
 app.get('/login', routes.login);
 app.post('/login', function(req, res) {
@@ -56,35 +59,22 @@ app.post('/login', function(req, res) {
             res.json({status: false,data: "Error occured: " + err});
         } else {
             if (user) {
-                res.json({status: true,name: user.name,email:user.email,token: user.token});
+                res.json({status: true,data:user});
             }else {
                 res.json({status: false,data: "Incorrect email/password"});
             }
         }
     });
 });
-//为APP装备的login
-app.post('/app/login', function(req, res) {
-    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
-        if (err) {
-            res.json({status: false,data: "Error occured: " + err});
-        } else {
-            if (user) {
-                res.json({status: true,data: user,token: user.token});
-            }else {
-                res.json({status: false,data: "Incorrect email/password"});
-            }
-        }
-    });
-});
+
 app.post('/signin', function(req, res) {
     User.findOne({email: req.body.email, password: req.body.password},
         function(err, user) {
             if (err) {
-                res.json({type: false,data: "Error occured: " + err});
+                res.json({status: false,data: "Error occured: " + err});
             } else {
                 if (user) {
-                    res.json({type: false,data: "User already exists!"});
+                    res.json({status: false,data: "User already exists!"});
                 } else {
                     var userModel = new User();
                     userModel.name = req.body.name;
@@ -103,9 +93,9 @@ app.post('/signin', function(req, res) {
 app.get('/me', ensureAuthorized, function(req, res) {
     User.findOne({token: req.token}, function(err, user) {
         if (err) {
-            res.json({type: false,data: "Error occured: " + err});
+            res.json({status: false,data: "Error occured: " + err});
         } else {
-            res.json({type: true,data: user});
+            res.json({status: true,data: user});
         }
     });
 });
