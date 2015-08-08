@@ -3448,52 +3448,72 @@ body,
     width: auto;
     overflow: auto;
 }
-
 .user-list {
     margin: 0;
     padding: 0px 0px;
     list-style: none;
 }
 .user-list > li {
-    -webkit-border-radius: 2px;
-    -moz-border-radius: 2px;
-    border-radius: 2px;
-    padding: 10px;
-    background: #f3f4f5;
-    margin-bottom: 2px;
-    border-left: 2px solid #e6e7e8;
-    color: #444;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: hidden;
 }
-.user-list > li:last-of-type {
-    margin-bottom: 0;
+.user-list > li > a {
+    display: block;
+    white-space: nowrap;
+    /* Prevent text from breaking */
+
+    border-bottom: 1px solid #f4f4f4;
 }
-.user-list > li.danger {
-    border-left-color: #f56954;
+.user-list  > li > a:hover {
+    background: #ffffff;
+    text-decoration: none;
 }
-.user-list > li.warning {
-    border-left-color: #f39c12;
+.user-list > li > a {
+    margin: 0px;
+    line-height: 20px;
+    padding: 10px 5px 10px 5px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
 }
-.user-list > li.info {
-    border-left-color: #00c0ef;
+.user-list > li > a > img {
+    margin: auto 10px auto auto;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #dddddd;
 }
-.user-list > li.success {
-    border-left-color: #00a65a;
+.user-list > li > a > h4 {
+    padding: 0;
+    margin: 0 0 0 45px;
+    color: #444444;
+    font-size: 15px;
 }
-.user-list > li.primary {
-    border-left-color: #3c8dbc;
+.user-list >li > a > h4 > small {
+    color: #999999;
+    font-size: 10px;
+    float: right;
 }
-.user-list > li > input[type='checkbox'] {
-    margin: 0 10px 0 5px;
+.user-list > li > a > p {
+    width:20px;
+    height:20px;
+    margin: 0 0 0 45px;
+    font-size: 12px;
+    color: #888888;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
 }
-.user-list > li .text {
-    display: inline-block;
-    margin-left: 5px;
-    font-weight: 600;
+.user-list > li > a:before,
+.user-list > li > a:after {
+    display: table;
+    content: " ";
 }
-.user-list > li .label {
-    margin-left: 10px;
-    font-size: 9px;
+.user-list > li > a:after {
+    clear: both;
 }
+
 .user-list > li .tools {
     display: none;
     float: right;
@@ -3508,107 +3528,73 @@ body,
 .user-list > li:hover .tools {
     display: inline-block;
 }
-.user-list > li.done {
-    color: #999;
-}
-.user-list > li.done .text {
-    text-decoration: line-through;
-    font-weight: 500;
-}
-.user-list > li.done .label {
-    background: #eaeaec !important;
-}
-.user-list .handle {
-    display: inline-block;
-    cursor: move;
-    margin: 0 5px;
-}
 
-.user-list  .image{
-    padding-top: 5px;
+.room-list {
+    margin: 0;
+    padding: 0px 0px;
+    list-style: none;
 }
-.user-list .image > img {
-    width: 40px;
-    height: 40px;
+.room-list > li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    overflow-x: hidden;
 }
-
-.chat-list {
-    padding: 5px 20px 5px 10px;
-}
-.chat-list .item {
-    margin-bottom: 10px;
-}
-.chat-list .item:before,
-.chat-list .item:after {
-    display: table;
-    content: " ";
-}
-.chat-list .item:after {
-    clear: both;
-}
-.chat-list .item > img {
-    width: 40px;
-    height: 40px;
-    border: 2px solid transparent;
-    -webkit-border-radius: 50% !important;
-    -moz-border-radius: 50% !important;
-    border-radius: 50% !important;
-}
-.chat-list .item > img.online {
-    border: 2px solid #00a65a;
-}
-.chat-list .item > img.offline {
-    border: 2px solid #f56954;
-}
-.chat-list .item > .message {
-    margin-left: 55px;
-    margin-top: -40px;
-}
-.chat-list .item > .message > .name {
+.room-list > li > a {
     display: block;
-    font-weight: 600;
+    white-space: nowrap;
+    /* Prevent text from breaking */
+
+    border-bottom: 1px solid #f4f4f4;
 }
-.chat-list .item > .message > span {
-    width:200px;
+.room-list  > li > a:hover {
+    background: #ffffff;
+    text-decoration: none;
+}
+.room-list > li > a {
+    margin: 0px;
+    line-height: 20px;
+    padding: 10px 5px 10px 5px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.room-list > li > a > img {
+    margin: auto 10px auto auto;
+    width: 40px;
+    height: 40px;
+    border: 1px solid #dddddd;
+}
+.room-list > li > a > h4 {
+    padding: 0;
+    margin: 0 0 0 45px;
+    color: #444444;
+    font-size: 15px;
+}
+.room-list >li > a > h4 > small {
+    color: #999999;
+    font-size: 10px;
+    float: right;
+}
+.room-list > li > a > span {
+    font-size: 12px;
+    color: #888888;
+    width:80px;
     height:20px;
     text-overflow:ellipsis;
     white-space:nowrap;
-    overflow:hidden;
+    overflow-x:hidden;
 }
-.chat-list .item > .attachment {
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    border-radius: 3px;
-    background: #f0f0f0;
-    margin-left: 65px;
-    margin-right: 15px;
-    padding: 10px;
+.room-list >li > a > small {
+    color: #999999;
+    font-size: 10px;
+    float: right;
 }
-.chat-list .item > .attachment > h4 {
-    margin: 0 0 5px 0;
-    font-weight: 600;
-    font-size: 14px;
-}
-.chat-list .item > .attachment > p,
-.chat-list .item > .attachment > .filename {
-    font-weight: 600;
-    font-size: 13px;
-    font-style: italic;
-    margin: 0;
-}
-.chat-list .item > .attachment:before,
-.chat-list .item > .attachment:after {
+.room-list > li > a:before,
+.room-list > li > a:after {
     display: table;
     content: " ";
 }
-.chat-list .item > .attachment:after {
+.room-list > li > a:after {
     clear: both;
-}
-
-.chat-list  .image{
-    padding-top: 5px;
-}
-.chat-list .image > img {
-    width: 40px;
-    height: 40px;
 }

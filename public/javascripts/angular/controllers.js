@@ -39,8 +39,9 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
     function($scope,$location,$user,$socket,$http,$log,global) {
         $scope.name = $user.name;
         $scope.email = $user.email;
+        $scope.user_map = {};
         $scope.user_list = [];
-        $scope.room_map = {};//id:room_list_index
+        $scope.room_map = {};//room_id:room_list_index
         $scope.room_list = [/*
             {
                 id:0,
@@ -164,7 +165,10 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
                     if (result.status) {
                         //更新用户列表
                         $log.log('success: ', result);
-                        $scope.user_list = result.data;
+                        for(var i=0; i<result.data.length; i++){
+                            //添加用户
+                            $scope.add_user(result.data[i]);
+                        }
                         $socket.emit('login', $user);
                     }else{
                         $log.log('error: ', result);
@@ -177,26 +181,22 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
         //创建房间
         $scope.create_single_room = function(target){
             //判断已经存在聊天室
-            if($scope.room_list.hasOwnProperty(target._id)){
-                $scope.select_room(target._id);
+            if(target.room_id!=""){
+                console.log(target);
+                $scope.select_room(target.room_id);
             }else{
                 var user_list = [$user._id,target._id];
                 $http.post('/create_single_room',{auth:$user.token,user_list:user_list})
                     .success(function(result, status, headers, config) {
                         if (result.status) {
+                            //更新目标的房间id
+                            console.log(result);
+                            target.room_id = result.data._id;
+                            $scope.user_list[target.index].room_id = result.data._id;
                             //更新房间列表
-                            $scope.room_map[target._id] = $scope.room_list.length;
-                            $scope.room_list.push({
-                                _id:result.data._id,//room_id
-                                name:target.name,
-                                target_id:target._id,
-                                image_url:target.image_url,
-                                time:"",
-                                new_message_number:"",
-                                message:"",
-                                message_list:[]
-                            });
-                            $scope.select_room(target._id);
+                            $scope.room_map[result.data._id] = $scope.room_list.length;
+                            $scope.add_room(result.data._id,target);
+                            $scope.select_room(target.room_id);
                         }else{
                             $log.log('error: ', result);
                         }
@@ -207,29 +207,82 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
             }
         };
         //选择房间
-        $scope.select_room = function(target_id){
-            var index = $scope.room_map[target_id];
+        $scope.select_room = function(room_id){
+            var index = $scope.room_map[room_id];
             $scope.cur_room =  $scope.room_list[index];
             $scope.cur_room_id = $scope.cur_room._id;
             $scope.cur_room_name = $scope.cur_room.name;
             $scope.cur_room_message = $scope.cur_room.message_list;
-            $log.log("target_id:"+target_id);
-            $log.log("room_id:"+$scope.cur_room_id);
+        };
+        $scope.add_room = function(room_id,target_user){
+            $scope.room_list.push({
+                _id:room_id,//room_id
+                name:target_user.name,
+                target_id:target_user._id,
+                image_url:target_user.image_url,
+                time:"2:15",
+                new_message_number:"new",
+                message:"",
+                message_list:[]
+            });
+            //返回新加的room的id
+            return $scope.room_list.length-1;
+        };
+        $scope.add_user = function(user){
+            var index = $scope.user_list.length;
+            $scope.user_list.push({
+                _id:user._id,
+                index:index,
+                room_id:"",//初始更新没有内容，需要向服务器连接，请求id
+                name:user.name,
+                email:user.email,
+                token:user.token,
+                image_url:"images/avatar.png"
+            });
+            $scope.user_map[user._id] = index;
+        };
+        $scope.get_user = function(user_id){
+            if(!$scope.user_map.hasOwnProperty(user_id)){
+                return undefined;
+            }else{
+                var index = $scope.user_map[user_id];
+                return $scope.user_list[index];
+            }
+        };
+        $scope.add_message = function(room_id,user_id,user_name,message){
+            //查询用户
+            var target =  $scope.get_user(user_id);
+            if(target!=undefined){
+                var new_message = {
+                    _id:"",
+                    name:target.name,
+                    time:"2:15",
+                    image_url:target.image_url,
+                    message:message
+                };
+                if($scope.cur_room_id==room_id){
+                    $scope.cur_room.message = message;
+                    $scope.cur_room_message.push(new_message);
+                }else{
+                    if(!$scope.room_map.hasOwnProperty(room_id)){
+                        //添加room
+                        $scope.room_map[room_id] = $scope.add_room(room_id,target);
+                    }
+                    var index = $scope.room_map[room_id];
+                    $scope.room_list[index].message = message;
+                    $scope.room_list[index].message_list.push(new_message);
+                }
+            }
         };
         //发送消息
         $scope.send_message = function (cur_room_id,msg) {
             $log.log("room_id:"+cur_room_id);
             $log.log("message:"+msg);
-            $log.log("message:"+$scope.message);
             if($scope.message!=""){
                 $scope.message = "";//清空输入框
-                $scope.cur_room_message.push({id:"",
-                    name:$user.name,
-                    time:"2:15",
-                    image_url:"images/avatar.png",
-                    message:msg});
+                $scope.add_message(cur_room_id,$user._id,$user.name,msg);
                 //$socket.broadcast.to('my room').emit('message', msg);
-                $socket.emit('message', {room_id:cur_room_id,name:$user.name,message:msg});
+                $socket.emit('message', {room_id:cur_room_id,user_id:$user._id,user_name:$user.name,message:msg});
             }
         };
         //websocket监听
@@ -237,13 +290,7 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
             $log.log('Message: ', msg);
             $log.log('msg_id: ', msg._id);
             $log.log('cur_room_id: ', $scope.cur_room_id);
-            if($scope.cur_room_id==msg.room_id){
-                $scope.cur_room_message.push({id:"",
-                    name:msg.name,
-                    time:"2:15",
-                    image_url:"images/avatar.png",
-                    message:msg.message});
-            }
+            $scope.add_message(msg.room_id,msg.user_id,msg.user_name,msg.message);
         });
     }]);
 

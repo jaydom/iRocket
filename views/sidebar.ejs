@@ -15,12 +15,12 @@
                 <i class="fa fa-comments-o">会话</i>
             </tab-heading>
             <div class="tab-pane fade in active" id="home">
+                <!--
                 <div class="chat-list">
-                    <!-- chat item -->
                     <div class="item" ng-repeat="room in room_list | filter:query | orderBy:orderProp">
                         <img ng-src="{{room.image_url}}" alt="user image" class="online"/>
-                        <p class="message"   ng-dblclick="select_room(room.target_id)">
-                            <a class="name" ng-dblclick="select_room(room.target_id)">
+                        <p class="message"   ng-dblclick="select_room(room._id)">
+                            <a class="name" ng-dblclick="select_room(room._id)">
                                 <small class="text-muted pull-right"><i class="fa fa-clock-o"></i>{{room.time}}</small>
                                 {{room.name}}
                             </a>
@@ -29,9 +29,21 @@
                             {{room.message}}
                             </span>
                         </p>
-                    </div><!-- /.item -->
-                    <!-- chat item -->
+                    </div>
                 </div><!-- /.chat -->
+                <ul class="room-list">
+                    <li ng-repeat="room in room_list | filter:query | orderBy:orderProp"  class="active">
+                        <a ng-dblclick="select_room(room._id)">
+                            <img ng-src="{{room.image_url}}" class="pull-left" alt="User Image"/>
+                            <h4>
+                                {{room.name}}
+                                <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                            </h4>
+                            <small class="badge bg-green pull-right">{{room.new_message_number}}</small>
+                            <span class="pull-left">{{room.message}}</span>
+                        </a>
+                    </li>
+                </ul>
             </div>
         </tab>
         <tab heading="user">
@@ -42,12 +54,13 @@
                 <ul class="user-list">
                     <li ng-repeat="user in user_list | filter:query | orderBy:orderProp" class="active">
                         <a class="image" ng-dblclick="create_single_room(user)">
-                            <img src="images/avatar.png" class="online"/> <span>{{user.name}}</span>
+                            <img src="images/avatar.png" class="online"/>
+                            <span>{{user.name}}</span>
+                            <div class="tools">
+                                <i class="fa fa-edit"></i>
+                                <i class="fa fa-trash-o"></i>
+                            </div>
                         </a>
-                        <div class="tools">
-                            <i class="fa fa-edit"></i>
-                            <i class="fa fa-trash-o"></i>
-                        </div>
                     </li>
                 </ul>
             </div>
