@@ -177,20 +177,21 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
         };
         //发送消息
         $scope.send_message = function (cur_room_id,msg) {
-            $log.log("room_id:"+cur_room_id);
-            $log.log("message:"+msg);
+            console.log("$scope.send_message:"+$scope.message);
+            console.log("$scope.send_message");
             if($scope.message!=""){
                 $scope.message = "";//清空输入框
-                $scope.add_message(cur_room_id,$user._id,$user.name,msg);
+                var new_message = {
+                    type:'msg',
+                    content:msg
+                };
+                $scope.add_message(cur_room_id,$user._id,$user.name,new_message);
                 //$socket.broadcast.to('my room').emit('message', msg);
-                $socket.emit('message', {room_id:cur_room_id,user_id:$user._id,user_name:$user.name,message:msg});
+                $socket.emit('message', {room_id:cur_room_id,user_id:$user._id,user_name:$user.name,message:new_message});
             }
         };
         //websocket监听
         $socket.on('message',function(msg) {
-            $log.log('Message: ', msg);
-            $log.log('msg_id: ', msg._id);
-            $log.log('cur_room_id: ', $scope.cur_room_id);
             $scope.add_message(msg.room_id,msg.user_id,msg.user_name,msg.message);
         });
         //发送
@@ -198,6 +199,26 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
             if(files.length>0){
                 for (var i = 0; i < files.length; i++) {
                     var file = files[i];
+                    //产生消息
+                    var new_message = {
+                        type:'file',
+                        name:file.name,
+                        size:file.size,
+                        progress:0
+                    };
+                    //单位转换
+                    if(file.size<1000){
+                        new_message.size = file.size + 'B';
+                    }else if(file.size>=1000&&file.size<1000000){
+                        new_message.size =  Math.floor(file.size/1000) + 'K';
+                    }else if(file.size>=1000000&&file.size<1000000000){
+                        new_message.size =  Math.floor(file.size/1000000) + 'M';
+                    }else{
+                        new_message.size =  Math.floor(file.size/1000000000) + 'G';
+                    }
+                    //添加消息
+                    $scope.add_message($scope.cur_room_id,$user._id,$user.name,new_message);
+                    //上传文件
                     Upload.upload({
                         url: '/upload',
                         fields: {'username': $scope.username},
@@ -205,6 +226,7 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
                     }).progress(function (evt) {
                         var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
                         console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                        new_message.progress = progressPercentage;
                     }).success(function (data, status, headers, config) {
                         console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
                     });

@@ -1616,34 +1616,32 @@ body > .header .logo .icon {
   display: block;
   font-weight: 600;
 }
-.box .chat .item > .attachment {
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  border-radius: 3px;
-  background: #f0f0f0;
-  margin-left: 65px;
-  margin-right: 15px;
-  padding: 10px;
+.box .chat .item > .message > .attachment {
+    height: 60px;
+    width: 280px;
+    padding: 10px;
 }
-.box .chat .item > .attachment > h4 {
-  margin: 0 0 5px 0;
-  font-weight: 600;
-  font-size: 14px;
+.box .chat .item > .message > .attachment img{
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
 }
-.box .chat .item > .attachment > p,
-.box .chat .item > .attachment > .filename {
-  font-weight: 600;
-  font-size: 13px;
-  font-style: italic;
-  margin: 0;
+.box .chat .item > .message > .attachment h5 {
+    padding-top: 0;
+    margin-top: 0;
+    overflow:hidden;
 }
-.box .chat .item > .attachment:before,
-.box .chat .item > .attachment:after {
-  display: table;
-  content: " ";
+
+.box .chat .item > .message > .attachment h5 .file-name {
+    width:160px;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    overflow:hidden;
 }
-.box .chat .item > .attachment:after {
-  clear: both;
+
+.box .chat .item > .message > .attachment .progress {
+    padding: 0;
+    margin: 0;
 }
 .box > .overlay,
 .box > .loading-img {
