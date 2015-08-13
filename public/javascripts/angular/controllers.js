@@ -2,10 +2,11 @@
 
 /* Controllers */
 //添加ui-bootstrap的支持
-var phonecatControllers = angular.module('phonecatControllers', ['ui.bootstrap','ngFileUpload']);
+var phonecatControllers = angular.module('phonecatControllers', ['ui.bootstrap','ngFileUpload','ui.router']);
 
 phonecatControllers.controller('loginCtrl', ['$scope','$location','$log','$user','$http',
     function($scope,$location, $log,$user,$http) {
+        console.log("loginCtrl");
         $scope.email = "";
         $scope.password = "";
         $scope.login = function() {
@@ -35,122 +36,14 @@ phonecatControllers.controller('loginCtrl', ['$scope','$location','$log','$user'
         }
     }]);
 
-phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socket','$http','$log','global',
-    function($scope,$location,$user,$socket,$http,$log,global) {
+phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socket','$http','$log','$state','Upload','global',
+    function($scope,$location,$user,$socket,$http,$log,$state,Upload,global) {
         $scope.name = $user.name;
         $scope.email = $user.email;
         $scope.user_map = {};
         $scope.user_list = [];
         $scope.room_map = {};//room_id:room_list_index
-        $scope.room_list = [/*
-            {
-                id:0,
-                name:"user1",
-                time:"2:15",
-                image_url:"images/avatar.png",
-                new_message_number:"new",
-                message:"I would like to meet you to discuss the latest news about\
-                the arrival of the new theme. They say it is going to be one the\
-                best themes on the market",
-                message_list:[{
-                        id:"",
-                        name:"user1",
-                        time:"2:15",
-                        image_url:"images/avatar.png",
-                        message:"I would like to meet you to discuss the latest news about\
-                    the arrival of the new theme. They say it is going to be one the\
-                    best themes on the market"
-                    },{
-                    id:"",
-                    name:"user1",
-                    time:"2:15",
-                    image_url:"images/avatar.png",
-                    message:"I would like to meet you to discuss the latest news about\
-                    the arrival of the new theme. They say it is going to be one the\
-                    best themes on the market"
-                    }
-                ]
-            },
-            {
-                id:1,
-                name:"user2",
-                time:"2:15",
-                image_url:"images/avatar2.png",
-                new_message_number:"new",
-                message:"I would like to meet you to discuss the latest news about\
-                    the arrival of the new theme. They say it is going to be one the\
-                    best themes on the market",
-                message_list:[{
-                        id:"",
-                        name:"user1",
-                        time:"2:15",
-                        image_url:"images/avatar.png",
-                        message:"I would like to meet you to discuss the latest news about\
-                            best themes on the market"
-                    },{
-                        id:"",
-                        name:"user1",
-                        time:"2:15",
-                        image_url:"images/avatar.png",
-                        message:"哈哈"
-                    }
-                ]
-            },
-            {
-                id:2,
-                name:"user3",
-                time:"2:15",
-                image_url:"images/avatar3.png",
-                new_message_number:"new",
-                message:"I would like to meet you to discuss the latest news about\
-                    the arrival of the new theme. They say it is going to be one the\
-                    best themes on the market",
-                message_list:[{
-                    id:"",
-                    name:"user1",
-                    time:"2:15",
-                    image_url:"images/avatar.png",
-                    message:"I would like to meet you to discuss the latest news about\
-                        the arrival of the new theme. They say it is going to be one the\
-                        best themes on the market"
-                },{
-                    id:"",
-                    name:"user1",
-                    time:"2:15",
-                    image_url:"images/avatar.png",
-                    message:"I would like to meet you to discuss the latest news about\
-                        the arrival of the new theme. They say it is going to be one the\
-                        best themes on the market"
-                }]
-            },
-            {
-                id:3,
-                name:"user4",
-                image_url:"images/avatar2.png",
-                time:"2:15",
-                new_message_number:"new",
-                message:"I would like to meet you to discuss the latest news about\
-                    the arrival of the new theme. They say it is going to be one the\
-                    best themes on the market",
-                message_list:[{
-                    id:"",
-                    name:"user1",
-                    time:"2:15",
-                    image_url:"images/avatar.png",
-                    message:"I would like to meet you to discuss the latest news about\
-                            the arrival of the new theme. They say it is going to be one the\
-                            best themes on the market"
-                },{
-                    id:"",
-                    name:"user1",
-                    time:"2:15",
-                    image_url:"images/avatar.png",
-                    message:"I would like to meet you to discuss the latest news about\
-                            the arrival of the new theme. They say it is going to be one the\
-                            best themes on the market"
-                }]
-            }*/
-        ];
+        $scope.room_list = [];
         $scope.message = "";
         $scope.cur_room = {};
         $scope.cur_room_id = "";
@@ -178,6 +71,14 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
                     log.log('error: ', result);
                 });
         });
+        //界面主动刷新
+        $scope.refresh_window = function(){
+            //$location.path("/main");
+            //$route.reload();
+            //$state.reload();
+            $location.path("/main");
+            //$state.go("main",{}, {reload: true});
+        }
         //创建房间
         $scope.create_single_room = function(target){
             //判断已经存在聊天室
@@ -292,6 +193,24 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
             $log.log('cur_room_id: ', $scope.cur_room_id);
             $scope.add_message(msg.room_id,msg.user_id,msg.user_name,msg.message);
         });
+        //发送
+        $scope.send_file = function(files){
+            if(files.length>0){
+                for (var i = 0; i < files.length; i++) {
+                    var file = files[i];
+                    Upload.upload({
+                        url: '/upload',
+                        fields: {'username': $scope.username},
+                        file: file
+                    }).progress(function (evt) {
+                        var progressPercentage = parseInt(100.0 * evt.loaded / evt.total);
+                        console.log('progress: ' + progressPercentage + '% ' + evt.config.file.name);
+                    }).success(function (data, status, headers, config) {
+                        console.log('file ' + config.file.name + 'uploaded. Response: ' + data);
+                    });
+                }
+            }
+        }
     }]);
 
 

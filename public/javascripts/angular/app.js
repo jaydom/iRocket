@@ -4,6 +4,7 @@
 
 var phonecatApp = angular.module('phonecatApp', [
   'ngRoute',
+  'ui.router',
   'phonecatControllers',
   'phonecatFilters',
   'phonecatServices',
@@ -26,11 +27,33 @@ phonecatApp.config(['$routeProvider','$locationProvider',
       //$locationProvider.html5Mode(true);
   }]);
 */
+/*
 phonecatApp.config(['$routeProvider', function($routeProvider) {
     $routeProvider.when('/login', { templateUrl: './login', controller: 'loginCtrl' , access: true});
-    $routeProvider.when('/main', { templateUrl: './main', controller: 'mainCtrl' });
+    $routeProvider.when('/main', { templateUrl: './main', controller: 'mainCtrl',reloadOnSearch:true});
     $routeProvider.otherwise({ redirectTo: '/main' });
 }]);
+*/
+phonecatApp.config(function($stateProvider, $urlRouterProvider) {
+    //
+    // For any unmatched url, redirect to /state1
+    $urlRouterProvider.otherwise("/state1");
+    //
+    // Now set up the states
+    $stateProvider
+        .state('login', {
+            url: "/login",
+            cache:'false',
+            templateUrl: "./login",
+            controller: 'loginCtrl'
+        })
+        .state('main', {
+            url: "/main",
+            cache:'false',
+            templateUrl: "./main",
+            controller: 'mainCtrl'
+        });
+});
 //定义全局的socket
 phonecatApp.factory('$socket', function($rootScope) {
     //var socket = io.connection('http://localhost:8899');
@@ -73,7 +96,7 @@ phonecatApp.factory('global', function () {
     };
 });
 
-phonecatApp.run(['$rootScope', '$window', '$location', '$log','$user', function ($rootScope, $window, $location, $log,$user) {
+phonecatApp.run(['$rootScope', '$window', '$location', '$log','$user','$state', function ($rootScope, $window, $location, $log,$user,$state) {
     var locationChangeStartOff = $rootScope.$on('$locationChangeStart', locationChangeStart);
     /*
     var locationChangeSuccessOff = $rootScope.$on('$locationChangeSuccess', locationChangeSuccess);
@@ -88,6 +111,8 @@ phonecatApp.run(['$rootScope', '$window', '$location', '$log','$user', function 
         if (!$user.isLogged) {
             // reload the login route
             $location.path("/login");
+            $log.log("redirect login");
+            //$state.go("login",{}, {reload: true});
         }
     }
 }]);

@@ -94,7 +94,6 @@ exports.service = function(server){
         //根据用户名，将用户加入各个聊天室
         socket.on('login', function(msg){
             console.log("login:"+JSON.stringify(msg));
-            socket.join('room1');
             user_list[msg._id] = {
                 _id:msg._id,
                 name:msg.name,

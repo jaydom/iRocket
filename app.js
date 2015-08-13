@@ -13,6 +13,7 @@ var chat_room     = require('./models/chat_room');
 var routes = require('./routes');
 var users = require('./routes/user');
 var chat_service = require("./routes/chat");
+var upload_service = require('./routes/upload');
 // Connect to DB
 mongoose.connect("mongodb://admin:admin@127.0.0.1:27019/iRocket");
 var app = express();
@@ -90,15 +91,7 @@ app.post('/signin', function(req, res) {
             }
         });
 });
-app.get('/me', ensureAuthorized, function(req, res) {
-    User.findOne({token: req.token}, function(err, user) {
-        if (err) {
-            res.json({status: false,data: "Error occured: " + err});
-        } else {
-            res.json({status: true,data: user});
-        }
-    });
-});
+app.post('/upload', upload_service.upload);
 function ensureAuthorized(req, res, next) {
     var bearerToken;
     var bearerHeader = req.headers["authorization"];
@@ -141,7 +134,7 @@ app.use(function(err, req, res, next) {
 });
 //打印错误异常信息
 process.on('uncaughtException', function(err) {
-    console.log(err);
+    console.log("uncaughtException:"+err);
 });
 
 app.add_chat_service = function(server){
