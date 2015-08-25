@@ -91,7 +91,18 @@ app.post('/signin', function(req, res) {
             }
         });
 });
+app.get('/editor',function(req,res){
+    res.render('editor', { title: 'Express' });
+});
+app.get('/viewer',function(req,res){
+    res.render('viewer', { title: 'Express' });
+});
 app.post('/upload', upload_service.upload);
+app.get('/attachment/:id',function(req,res){
+    //..db get file realpath
+    console.log("userid: "+req.params.id)
+    res.download("./public/files/L2switch.doc","L2switch2.doc");
+});
 function ensureAuthorized(req, res, next) {
     var bearerToken;
     var bearerHeader = req.headers["authorization"];

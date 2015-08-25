@@ -6,7 +6,6 @@ var fs= require('fs');
 var util = require('util');
 
 exports.upload = function(req, res){
-    console.log(req.body, req.files);
     //生成multiparty对象，并配置下载目标路径
     var form = new multiparty.Form({uploadDir: './public/files/'});
 //下载后处理

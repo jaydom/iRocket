@@ -1,36 +1,12 @@
 <section class="sidebar" style="overflow-x:hidden;overflow-y: auto;">
     <!-- Sidebar user panel -->
     <!-- search form -->
-    <div class="sidebar-form">
-        <div class="input-group">
-            <input type="text" name="q" class="form-control" placeholder="Search..." ng-model="query"/>
-            <span class="input-group-btn">
-                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
-            </span>
-        </div>
-    </div>
-    <tabset>
+    <tabset justified="true">
         <tab heading="chat">
             <tab-heading>
                 <i class="fa fa-comments-o">会话</i>
             </tab-heading>
             <div class="tab-pane fade in active" id="home">
-                <!--
-                <div class="chat-list">
-                    <div class="item" ng-repeat="room in room_list | filter:query | orderBy:orderProp">
-                        <img ng-src="{{room.image_url}}" alt="user image" class="online"/>
-                        <p class="message"   ng-dblclick="select_room(room._id)">
-                            <a class="name" ng-dblclick="select_room(room._id)">
-                                <small class="text-muted pull-right"><i class="fa fa-clock-o"></i>{{room.time}}</small>
-                                {{room.name}}
-                            </a>
-                            <small class="badge pull-right bg-green">{{room.new_message_number}}</small>
-                            <span style="" class="pull-left">
-                            {{room.message}}
-                            </span>
-                        </p>
-                    </div>
-                </div><!-- /.chat -->
                 <ul class="room-list">
                     <li ng-repeat="room in room_list | filter:query | orderBy:orderProp"  class="active">
                         <a ng-dblclick="select_room(room._id)">
@@ -40,7 +16,7 @@
                                 <small><i class="fa fa-clock-o"></i> 5 mins</small>
                             </h4>
                             <small class="badge bg-green pull-right">{{room.new_message_number}}</small>
-                            <span class="pull-left">{{room.message}}</span>
+                            <span class="pull-left">{{room.message.content}}</span>
                         </a>
                     </li>
                 </ul>

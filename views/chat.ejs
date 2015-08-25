@@ -6,8 +6,8 @@
                 <h3 class="box-title"><i class="fa fa-comments-o"></i> {{cur_room_name}}</h3>
                 <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
                     <div class="btn-group" data-toggle="btn-toggle" >
-                        <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>
-                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i></button>
+                        <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i>聊天</button>
+                        <button type="button" class="btn btn-default btn-sm"><i class="fa fa-square text-red"></i>搜索</button>
                     </div>
                 </div>
             </div>
@@ -34,8 +34,8 @@
                                 </div>
                                 <h5 ng-if="msg.message.progress==100">
                                     <span>上传完成</span>
-                                    <i class="fa fa-folder-open"></i>
-                                    <i class="fa fa-download"></i>
+                                    <i class="fa fa-folder-open" style="cursor: pointer;" ng-click="open_file()"></i>
+                                    <a href="/attachment/jflasjdlf" target="_blank"><i class="fa fa-download"></i></a>
                                 </h5>
                             </div>
                         </div>

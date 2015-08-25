@@ -38,6 +38,7 @@ phonecatControllers.controller('loginCtrl', ['$scope','$location','$log','$user'
 
 phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socket','$http','$log','$state','Upload','global',
     function($scope,$location,$user,$socket,$http,$log,$state,Upload,global) {
+        $scope.page = "editor";
         $scope.name = $user.name;
         $scope.email = $user.email;
         $scope.user_map = {};
@@ -51,8 +52,10 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
         $scope.cur_room_message = [];
         //界面监听
         $scope.$on('$viewContentLoaded', function() {
+            alert("$viewContentLoaded");
             split_init();
             setPos();
+            init_pdf_viewer();
             $http.get('/users',{params: {data:$user}})
                 .success(function(result, status, headers, config) {
                     if (result.status) {
@@ -204,7 +207,8 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
                         type:'file',
                         name:file.name,
                         size:file.size,
-                        progress:0
+                        progress:0,
+                        content:"发送文件："+file.name
                     };
                     //单位转换
                     if(file.size<1000){
@@ -232,6 +236,9 @@ phonecatControllers.controller('mainCtrl', ['$scope','$location','$user','$socke
                     });
                 }
             }
+        };
+        $scope.open_file = function(){
+            alert("open_file");
         }
     }]);
 

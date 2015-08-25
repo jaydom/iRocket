@@ -199,6 +199,28 @@
             <span class="icon-bar"></span>
         </a>
     </div>
+    <div class="pull-left search">
+        <div class="input-group">
+
+            <input type="text" name="q" class="form-control" placeholder="Search..." ng-model="query"/>
+            <span class="input-group-btn">
+                <button type='submit' name='seach' id='search-btn' class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" dropdown>
+                    全文搜索
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li><a href="#">全文搜索</a></li>
+                    <li><a href="#">好友搜索</a></li>
+                    <li><a href="#">题目搜索</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">分离的链接</a></li>
+                </ul>
+            </div><!-- /btn-group -->
+        </div>
+    </div>
 </div>
 
 <div class="navbar-right">
